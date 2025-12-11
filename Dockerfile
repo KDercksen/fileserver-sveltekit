@@ -13,7 +13,7 @@ FROM node:22-alpine
 
 WORKDIR /app
 COPY --from=builder /app .
-RUN ls -l .
+RUN apk add --no-cache curl
 
 EXPOSE 3000
 ENV NODE_ENV=production
