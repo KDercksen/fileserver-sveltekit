@@ -6,6 +6,8 @@
 </script>
 
 <svelte:head>
+	<title>avirai file server</title>
+	<meta name="description" content="A simple file server built with SvelteKit" />
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
