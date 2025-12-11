@@ -21,7 +21,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: ['/bin/sh', '-c', 'npm run db:push && node build']
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000 || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    command: ['/bin/sh', '-c', 'npm run db:push:prod && node build']
 
   db:
     image: postgres
