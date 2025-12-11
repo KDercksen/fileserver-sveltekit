@@ -1,0 +1,4 @@
+.svelte-kit
+uploads
+node_modules
+.env

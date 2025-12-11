@@ -1,20 +1,19 @@
-import { pgTable, serial, integer, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, bigint } from 'drizzle-orm/pg-core';
 
-export const user = pgTable('user', {
+export const file = pgTable('file', {
 	id: text('id').primaryKey(),
-	age: integer('age'),
-	username: text('username').notNull().unique(),
-	passwordHash: text('password_hash').notNull()
+	originalName: text('original_name').notNull(),
+	storagePath: text('storage_path').notNull(),
+	mimeType: text('mime_type').notNull(),
+	size: bigint('size', { mode: 'number' }).notNull(),
+	expiresAt: timestamp('expires_at', { withTimezone: true, mode: 'date' }),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).defaultNow().notNull()
 });
 
 export const session = pgTable('session', {
 	id: text('id').primaryKey(),
-	userId: text('user_id')
-		.notNull()
-		.references(() => user.id),
 	expiresAt: timestamp('expires_at', { withTimezone: true, mode: 'date' }).notNull()
 });
 
 export type Session = typeof session.$inferSelect;
-
-export type User = typeof user.$inferSelect;
+export type File = typeof file.$inferSelect;
